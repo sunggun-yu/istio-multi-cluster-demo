@@ -1,0 +1,2 @@
+# name: istio-ingressgateway
+# replicaCount: 1

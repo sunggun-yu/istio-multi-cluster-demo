@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: istio-system
+helmCharts:
+- name: cert-manager-istio-csr
+  namespace: cert-manager
+  releaseName: cert-manager
+  repo: https://charts.jetstack.io
+  version: 0.8.1
+  includeCRDs: true
+  valuesInline:
+    app:
+      logLevel: 5
+      server:
+        clusterID: meowhq-k3s-xeon1
+      certmanager:
+        namespace: istio-system
+        issuer:
+          name: vault-issuer-istio-ca
+      tls:
+        certificateDNSNames:
+          - cert-manager-istio-csr.istio-system.svc

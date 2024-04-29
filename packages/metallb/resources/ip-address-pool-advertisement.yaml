@@ -1,0 +1,8 @@
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: istio-ingress-gateway-advertisement
+spec:
+  ipAddressPools:
+  - istio-ingress-gateway-pool
+  - istio-cross-cluster-gateway-pool

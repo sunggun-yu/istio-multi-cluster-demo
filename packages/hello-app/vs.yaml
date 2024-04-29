@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  gateways:
+  - istio-system/demo-meowhq-dev-gw
+  hosts:
+  - hello.demo.meowhq.dev
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: hello
+        # host: hello.hello.svc.cluster.local
+        port:
+          number: 8080

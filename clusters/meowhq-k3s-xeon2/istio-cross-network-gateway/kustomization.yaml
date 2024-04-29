@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: istio-system
+helmCharts:
+- name: gateway
+  namespace: istio-system
+  releaseName: istio-cross-network-gateway
+  repo: https://istio-release.storage.googleapis.com/charts
+  version: 1.21.1
+  includeCRDs: true
+  valuesInline:
+    name: istio-cross-network-gateway
+    replicaCount: 1
+    labels:
+      istio: cross-network-gateway
+      app: istio-cross-network-gateway
+      topology.istio.io/network: meowhq-k3s-xeon2

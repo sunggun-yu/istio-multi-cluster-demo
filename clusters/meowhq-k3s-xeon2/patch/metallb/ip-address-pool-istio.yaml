@@ -1,0 +1,20 @@
+---
+# istio Gateway Address Pool
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: istio-ingress-gateway-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.10.27/32
+---
+# istio Cross Cluster Gateway Address Pool
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: istio-cross-cluster-gateway-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.10.28/32

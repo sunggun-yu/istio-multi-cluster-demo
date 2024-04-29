@@ -1,0 +1,19 @@
+---
+# istio Gateway Address Pool
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: istio-ingress-gateway-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.10.21
+  avoidBuggyIPs: true
+  serviceAllocation:
+    priority: 50
+    namespaces:
+      - istio-system
+    serviceSelectors:
+      - matchLabels:
+          app: istio-ingressgateway
+          istio: ingressgateway

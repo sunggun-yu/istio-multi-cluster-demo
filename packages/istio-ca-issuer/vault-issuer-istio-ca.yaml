@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer-istio-ca
+  namespace: istio-system
+spec:
+  vault:
+    server: https://vault.lab.meowhq.dev
+    path: "pki_istio_int/sign/issuer"
+    auth:
+      appRole:
+        path: approle
+        roleId: 48e47d29-469d-fe83-5f83-a430c96b17f8
+        secretRef:
+          name: vault-issuer-istio-ca
+          key: secret_id

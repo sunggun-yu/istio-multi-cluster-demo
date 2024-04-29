@@ -1,0 +1,86 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  meshConfig:
+    defaultConfig:
+      proxyMetadata:
+        # Enable basic DNS proxying
+        ISTIO_META_DNS_CAPTURE: "true"
+        # Enable automatic address allocation, optional
+        ISTIO_META_DNS_AUTO_ALLOCATE: "true"
+    accessLogFile: /dev/stdout
+
+  components:
+    ingressGateways:
+    - name: istio-ingressgateway
+      enabled: true
+      k8s:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 40Mi
+    - name: istio-egressgateway
+      enabled: false
+    - name: istio-cross-network-gateway
+      label:
+        istio: cross-network-gateway
+        app: istio-cross-network-gateway
+        topology.istio.io/network: meowhq-k3s-xeon1
+      enabled: true
+      k8s:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 40Mi
+        env:
+          # traffic through this gateway should be routed inside the network
+          - name: ISTIO_META_REQUESTED_NETWORK_VIEW
+            value: meowhq-k3s-xeon1
+        service:
+          ports:
+            - name: status-port
+              port: 15021
+              targetPort: 15021
+            - name: tls
+              port: 15443
+              targetPort: 15443
+            - name: tls-istiod
+              port: 15012
+              targetPort: 15012
+            - name: tls-webhook
+              port: 15017
+              targetPort: 15017
+
+    pilot:
+      k8s:
+        env:
+          - name: PILOT_TRACE_SAMPLING
+            value: "100"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+
+  values:
+    global:
+      caAddress: "cert-manager-istio-csr.istio-system.svc:443"
+      meshID: meowhq-mesh
+      multiCluster:
+        clusterName: meowhq-k3s-xeon1
+      network: meowhq-k3s-xeon1
+      proxy:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 40Mi
+
+    pilot:
+      autoscaleEnabled: false
+      env:
+        ENABLE_CA_SERVER: false
+
+    gateways:
+      istio-egressgateway:
+        autoscaleEnabled: false
+      istio-ingressgateway:
+        autoscaleEnabled: false

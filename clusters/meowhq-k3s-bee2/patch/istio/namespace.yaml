@@ -1,0 +1,4 @@
+- op: add
+  path: "/metadata/labels"
+  value:
+    topology.istio.io/network: meowhq-k3s-bee2
