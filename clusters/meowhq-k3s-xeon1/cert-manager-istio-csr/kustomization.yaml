@@ -13,6 +13,7 @@ helmCharts:
       logLevel: 5
       server:
         clusterID: meowhq-k3s-xeon1
+        maxCertificateDuration: 87600h
       certmanager:
         namespace: istio-system
         issuer:
@@ -20,3 +21,6 @@ helmCharts:
       tls:
         certificateDNSNames:
           - cert-manager-istio-csr.istio-system.svc
+        certificateDuration: 87600h
+        istiodCertificateDuration: 87600h
+        istiodPrivateKeySize: 4096
