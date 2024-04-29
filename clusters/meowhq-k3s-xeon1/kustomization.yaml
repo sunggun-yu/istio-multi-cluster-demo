@@ -7,7 +7,7 @@ resources:
 - ../../packages/istio-namespace        # istio-namespace
 
 - ../../packages/istio-ca-issuer        # istio-ca-issuer -- do not apply if you are using manual CA
-- cert-manager-istio-csr                # cert-manager istio-csr -- do not apply if you are using manual CA
+- overlays/cert-manager-istio-csr                # cert-manager istio-csr -- do not apply if you are using manual CA
 
 
 ## ----------------------------------------------------------------------------
@@ -15,21 +15,21 @@ resources:
 ## ----------------------------------------------------------------------------
 
 # - ../../packages/istio-base             # istio-base
-# - istiod                                # istiod
+# - overlays/istiod                                # istiod
 # - ../../packages/istio-ingressgateway   # istio-ingressgateway
-# - istio-cross-network-gateway           # istio-cross-network-gateway
+# - overlays/istio-cross-network-gateway           # istio-cross-network-gateway
 
 ## ----------------------------------------------------------------------------
 ## Install after Istio is installed
 ## ----------------------------------------------------------------------------
 
 # - ../../packages/istio-gateways         # istio-gateways, ingress and cross-network gateway
-# - hello-app                             # hello-app
+# - overlays/hello-app                             # hello-app
 
 patches:
-- path: patch/metallb/ip-address-pool-istio.yaml
-- path: patch/external-secrets/cluster-secret-store-jwt.yaml
-- path: patch/istio/namespace.yaml
+- path: patches/metallb/ip-address-pool-istio.yaml
+- path: patches/external-secrets/cluster-secret-store-jwt.yaml
+- path: patches/istio/namespace.yaml
   target:
     kind: Namespace
     name: istio-system
