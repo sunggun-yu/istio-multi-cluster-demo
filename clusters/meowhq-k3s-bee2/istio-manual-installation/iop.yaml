@@ -63,12 +63,15 @@ spec:
 
   values:
     global:
+      logging:
+        level: "default:debug"
       caAddress: "cert-manager-istio-csr.istio-system.svc:443"
       meshID: meowhq-mesh
       multiCluster:
         clusterName: meowhq-k3s-bee2
       network: meowhq-k3s-bee2
       proxy:
+        logLevel: debug
         resources:
           requests:
             cpu: 10m

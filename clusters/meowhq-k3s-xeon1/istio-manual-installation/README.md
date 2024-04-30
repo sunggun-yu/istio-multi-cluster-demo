@@ -11,7 +11,7 @@ istioctl install -f iop.yaml
 or, generate  the manifest from  IstioOperator:
 
 ```bash
- istioctl manifest generate -f iop.yaml > manifest.yaml
+istioctl manifest generate -f iop.yaml > manifest.yaml
 ```
 
 create remote secret of my cluster:

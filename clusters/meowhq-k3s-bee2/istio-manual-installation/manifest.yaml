@@ -10658,7 +10658,7 @@ data:
         "jwtPolicy": "third-party-jwt",
         "logAsJson": false,
         "logging": {
-          "level": "default:info"
+          "level": "default:debug"
         },
         "meshID": "meowhq-mesh",
         "meshNetworks": {},
@@ -10686,7 +10686,7 @@ data:
           "includeIPRanges": "*",
           "includeInboundPorts": "*",
           "includeOutboundPorts": "",
-          "logLevel": "warning",
+          "logLevel": "debug",
           "privileged": false,
           "readinessFailureThreshold": 4,
           "readinessInitialDelaySeconds": 0,
@@ -10969,9 +10969,9 @@ spec:
         - router
         - --domain
         - $(POD_NAMESPACE).svc.cluster.local
-        - --proxyLogLevel=warning
+        - --proxyLogLevel=debug
         - --proxyComponentLogLevel=misc:error
-        - --log_output_level=default:info
+        - --log_output_level=default:debug
         env:
         - name: ISTIO_META_REQUESTED_NETWORK_VIEW
           value: meowhq-k3s-bee2
@@ -11201,9 +11201,9 @@ spec:
         - router
         - --domain
         - $(POD_NAMESPACE).svc.cluster.local
-        - --proxyLogLevel=warning
+        - --proxyLogLevel=debug
         - --proxyComponentLogLevel=misc:error
-        - --log_output_level=default:info
+        - --log_output_level=default:debug
         env:
         - name: JWT_POLICY
           value: third-party-jwt
@@ -11417,7 +11417,7 @@ spec:
       - args:
         - discovery
         - --monitoringAddr=:15014
-        - --log_output_level=default:info
+        - --log_output_level=default:debug
         - --domain
         - cluster.local
         - --keepaliveMaxServerConnectionAge
