@@ -1,0 +1,23 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello-weighted-route-local
+  namespace: hello
+spec:
+  hosts:
+  - hello.hello.svc.cluster.local
+  http:
+  - route:
+    - destination:
+        host: hello.hello.svc.cluster.local
+        subset: meowhq-k3s-bee1
+      weight: 1
+    - destination:
+        host: hello.hello.svc.cluster.local
+        subset: meowhq-k3s-bee2
+      weight: 1
+    - destination:
+        host: hello.hello.svc.cluster.local
+        subset: meowhq-k3s-xeon1
+      weight: 100

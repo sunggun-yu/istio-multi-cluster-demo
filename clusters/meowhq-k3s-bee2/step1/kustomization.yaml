@@ -1,0 +1,18 @@
+---
+## ----------------------------------------------------------------------------
+## Install base packages
+## ----------------------------------------------------------------------------
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../packages/external-secrets       # external-secrets
+- ../../../packages/cert-manager           # cert-manager
+- ../../../packages/metallb                # metallb
+- ../../../packages/istio-namespace        # istio-namespace
+patches:
+- path: patches/metallb/ip-address-pool-istio.yaml
+- path: patches/external-secrets/cluster-secret-store-jwt.yaml
+- path: patches/istio/namespace.yaml
+  target:
+    kind: Namespace
+    name: istio-system

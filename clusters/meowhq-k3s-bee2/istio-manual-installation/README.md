@@ -18,6 +18,7 @@ create remote secret of my cluster:
 
 ```bash
 istioctl create-remote-secret \
+ --namespace=istio-system \
  --name=meowhq-k3s-bee2 \
  --server=https://bee2.k3s.meowhq.dev:6443 \
  > ../../remote-secrets/meowhq-k3s-bee2.yaml
@@ -26,6 +27,12 @@ istioctl create-remote-secret \
 proceed other cluster installation and create the remote secrets. and create other clusters secret to enable  endpoint discovery
 
 ```bash
-kubectl apply -f ../../remote-secrets/meowhq-k3s-bee1.yaml
-kubectl apply -f ../../remote-secrets/meowhq-k3s-xeon1.yaml
+kubectl apply -n istio-system -f ../../remote-secrets/meowhq-k3s-bee1.yaml
+kubectl apply -n istio-system -f ../../remote-secrets/meowhq-k3s-xeon1.yaml
+```
+
+uninstall istio:
+
+```bash
+istioctl uninstall --purge
 ```

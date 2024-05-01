@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: hello-cluster-dr
+  namespace: hello
+spec:
+  host: hello.hello.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+    loadBalancer:
+      simple: RANDOM
+  subsets:
+  - name: meowhq-k3s-bee1
+    labels:
+      topology.istio.io/cluster: meowhq-k3s-bee1
+  - name: meowhq-k3s-bee2
+    labels:
+      topology.istio.io/cluster: meowhq-k3s-bee2
+  - name: meowhq-k3s-xeon1
+    labels:
+      topology.istio.io/cluster: meowhq-k3s-xeon1

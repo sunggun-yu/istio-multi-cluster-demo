@@ -8,4 +8,3 @@ helmCharts:
   repo: https://istio-release.storage.googleapis.com/charts
   version: 1.21.1
   includeCRDs: true
-  valuesFile: values.yaml

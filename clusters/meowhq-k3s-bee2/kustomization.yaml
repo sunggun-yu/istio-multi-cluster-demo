@@ -1,34 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../packages/external-secrets       # external-secrets
-- ../../packages/cert-manager           # cert-manager
-- ../../packages/metallb                # metallb
-- ../../packages/istio-namespace        # istio-namespace
-
-- ../../packages/istio-ca-issuer        # istio-ca-issuer -- do not apply if you are using manual CA
-- overlays/cert-manager-istio-csr                # cert-manager istio-csr -- do not apply if you are using manual CA
-
-## ----------------------------------------------------------------------------
-## Install Istio manually with istioctl for now
-## ----------------------------------------------------------------------------
-
-# - ../../packages/istio-base             # istio-base
-# - overlays/istiod                                # istiod
-# - ../../packages/istio-ingressgateway   # istio-ingressgateway
-# - overlays/istio-cross-network-gateway           # istio-cross-network-gateway
-
-## ----------------------------------------------------------------------------
-## Install after Istio is installed
-## ----------------------------------------------------------------------------
-
-# - ../../packages/istio-gateways         # istio-gateways, ingress and cross-network gateway
-# - overlays/hello-app                             # hello-app
-
-patches:
-- path: patches/metallb/ip-address-pool-istio.yaml
-- path: patches/external-secrets/cluster-secret-store-jwt.yaml
-- path: patches/istio/namespace.yaml
-  target:
-    kind: Namespace
-    name: istio-system
+# - step1
+- step2
