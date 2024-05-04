@@ -1,0 +1,24 @@
+---
+## ----------------------------------------------------------------------------
+## Install monitoring tools
+## ----------------------------------------------------------------------------
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../packages/prometheus
+- ../../../packages/grafana
+- ../../../packages/jaeger
+# - ../../../packages/loki
+- ../../../packages/kiali         # Kiali Operator and Kiali Server
+patches:
+- target:
+    group: networking.istio.io
+    version: v1beta1
+    kind: VirtualService
+    name: kiali
+    namespace: istio-system
+  patch: |-
+    - op: replace
+      path: /spec/hosts
+      value:
+        - kiali.bee1.k3s.meowhq.dev

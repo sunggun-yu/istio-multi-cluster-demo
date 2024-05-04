@@ -1,0 +1,22 @@
+secretReader: ['cacerts', 'istio-ca-secret', 'istiod-tls']
+onlyViewOnlyMode: false
+cr:
+  create: true
+  name: kiali
+  namespace: istio-system
+  # Annotations to place in the Kiali CR metadata.
+  annotations: {}
+  spec:
+    auth:
+      strategy: anonymous
+    deployment:
+      accessible_namespaces:
+      - '**'
+    kiali_feature_flags:
+      certificates_information_indicators:
+      enabled: true
+      secrets:
+        - "istiod-tls"
+      clustering:
+        autodetect_secrets:
+          enabled: true

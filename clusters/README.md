@@ -4,6 +4,9 @@
 - [Step2](#step2)
 - [Step3](#step3)
 - [Step4](#step4)
+- [Step5](#step5)
+  - [Configure Kiali Remote Secrets for multi cluster](#configure-kiali-remote-secrets-for-multi-cluster)
+  - [Installing Monitoring packages](#installing-monitoring-packages)
 - [Deploy test hello-app](#deploy-test-hello-app)
 
 ----
@@ -136,6 +139,26 @@ Create Gateways
 
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/step4 \
+| kubectl apply -f -
+```
+
+## Step5
+
+Config Monitoring packages
+
+### Configure Kiali Remote Secrets for multi cluster
+
+Ref: [Kiali Multi Cluster Configuration](../kiali-multicluster/README.md)
+
+### Installing Monitoring packages
+
+- Prometheus
+- Grafana
+- Kiali
+- Jaeger
+
+```bash
+kustomize build --enable-helm $ENVP_PROFILE/step5 \
 | kubectl apply -f -
 ```
 

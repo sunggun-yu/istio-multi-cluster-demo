@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# do not set namespace for Kustomization here. It will set the namespace for Kiali CR as namespace of Kustomization. that is not what we want. 
+resources:
+  - namespace.yaml
+  - resources/vs.yaml
+helmCharts:
+- name: kiali-operator
+  namespace: kiali-operator
+  releaseName: kiali-operator
+  repo: https://kiali.org/helm-charts
+  version: 1.83.0
+  includeCRDs: true
+  valuesFile: values.yaml

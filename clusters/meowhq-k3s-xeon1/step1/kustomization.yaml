@@ -9,6 +9,7 @@ resources:
 - ../../../packages/cert-manager           # cert-manager
 - ../../../packages/metallb                # metallb
 - ../../../packages/istio-namespace        # istio-namespace
+- ../../../packages/istio-certs            # let's encrypt cert issuer for istio ingress gateways
 patches:
 - path: patches/metallb/ip-address-pool-istio.yaml
 - path: patches/external-secrets/cluster-secret-store-jwt.yaml
@@ -16,3 +17,13 @@ patches:
   target:
     kind: Namespace
     name: istio-system
+- target:
+    group: cert-manager.io
+    version: v1
+    kind: Certificate
+    name: wildcard-k3s-cluster-dns-tls
+  patch: |-
+    - op: replace
+      path: /spec/dnsNames
+      value:
+        - "*.xeon1.k3s.meowhq.dev"
