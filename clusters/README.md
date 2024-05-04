@@ -148,7 +148,7 @@ Config Monitoring packages
 
 ### Configure Kiali Remote Secrets for multi cluster
 
-Ref: [Kiali Multi Cluster Configuration](../kiali-multicluster/README.md)
+Ref: [Kiali Multi Cluster Configuration](./kiali-multicluster/README.md)
 
 ### Installing Monitoring packages
 
