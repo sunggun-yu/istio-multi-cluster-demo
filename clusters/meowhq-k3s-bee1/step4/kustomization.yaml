@@ -6,3 +6,19 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../../packages/istio-gateways         # istio-gateways, ingress and cross-network gateway
+patches:
+- target:
+    group: networking.istio.io
+    version: v1beta1
+    kind: Gateway
+    name: cluster-k3s-meowhq-dev-gw
+    namespace: istio-system
+  patch: |-
+    - op: replace
+      path: /spec/servers/0/hosts
+      value: 
+        - "*.bee1.k3s.meowhq.dev"
+    - op: replace
+      path: /spec/servers/1/hosts
+      value: 
+        - "*.bee1.k3s.meowhq.dev"
