@@ -20,7 +20,7 @@ spec:
         port:
           number: 8080
         subset: meowhq-k3s-bee1
-      weight: 30
+      weight: 50
     - destination:
         host: hello.hello.svc.cluster.local
         port:
@@ -32,4 +32,4 @@ spec:
         port:
           number: 8080
         subset: meowhq-k3s-xeon1
-      weight: 40
+      weight: 20
