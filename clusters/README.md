@@ -1,8 +1,10 @@
 # Clusters configuration
 
+- [Pre-requisites](#pre-requisites)
 - [Step1](#step1)
 - [Step2](#step2)
 - [Step3](#step3)
+  - [Create Istio Remote Secrets](#create-istio-remote-secrets)
 - [Step4](#step4)
 - [Step5](#step5)
   - [Configure Kiali Remote Secrets for multi cluster](#configure-kiali-remote-secrets-for-multi-cluster)
@@ -29,6 +31,10 @@ envp start meowhq-k3s-bee2/
 envp start meowhq-k3s-xeon1
 ```
 
+## Pre-requisites
+
+- Provision Vault PKI Engines [Vault PKI Engines](../docs/configure-vault-pki-engines.md)
+
 ## Step1
 
 Install base packages
@@ -38,9 +44,18 @@ Install base packages
 - `metallb`
 - `istio-namespace`
 
+Install:
+
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/step1 \
 | kubectl apply -f -
+```
+
+Cleanup:
+
+```bash
+kustomize build --enable-helm $ENVP_PROFILE/step1 \
+| kubectl delete -f -
 ```
 
 ## Step2
@@ -75,6 +90,13 @@ you should see `istiod-tls` secret:
 kubectl get secrets -n istio-system
 ```
 
+Cleanup:
+
+```bash
+kustomize build --enable-helm $ENVP_PROFILE/step2 \
+| kubectl delete -f -
+```
+
 ## Step3
 
 Install Istio manually
@@ -94,6 +116,10 @@ kubectl apply \
   -f $ENVP_PROFILE/istio-manual-installation/manifest.yaml
 ```
 
+### Create Istio Remote Secrets
+
+run in `meowhq-k3s-bee1` k8s context:
+
 ```bash
 istioctl create-remote-secret \
  --namespace=istio-system \
@@ -101,6 +127,8 @@ istioctl create-remote-secret \
  --server=https://bee1.k3s.meowhq.dev:6443 \
  > ./remote-secrets/meowhq-k3s-bee1.yaml
 ```
+
+run in `meowhq-k3s-bee2` k8s context:
 
 ```bash
 istioctl create-remote-secret \
@@ -110,6 +138,8 @@ istioctl create-remote-secret \
  > ./remote-secrets/meowhq-k3s-bee2.yaml
 ```
 
+run in `meowhq-k3s-xeon1` k8s context:
+
 ```bash
 istioctl create-remote-secret \
  --namespace=istio-system \
@@ -118,28 +148,56 @@ istioctl create-remote-secret \
  > ./remote-secrets/meowhq-k3s-xeon1.yaml
 ```
 
+run in `meowhq-k3s-bee1` k8s context:
+
 ```bash
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee2.yaml
 kubectl apply -f ./remote-secrets/meowhq-k3s-xeon1.yaml
 ```
+
+run in `meowhq-k3s-bee2` k8s context:
 
 ```bash
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee1.yaml
 kubectl apply -f ./remote-secrets/meowhq-k3s-xeon1.yaml
 ```
 
+run in `meowhq-k3s-xeon1` k8s context:
+
 ```bash
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee1.yaml
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee2.yaml
+```
+
+Cleanup:
+
+```bash
+istioctl uninstall --purge
+```
+
+or,
+
+```bash
+kubectl delete \
+  -f $ENVP_PROFILE/istio-manual-installation/manifest.yaml
 ```
 
 ## Step4
 
 Create Gateways
 
+Install
+
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/step4 \
 | kubectl apply -f -
+```
+
+Cleanup:
+
+```bash
+kustomize build --enable-helm $ENVP_PROFILE/step4 \
+| kubectl delete -f -
 ```
 
 ## Step5
@@ -157,14 +215,32 @@ Ref: [Kiali Multi Cluster Configuration](./kiali-multicluster/README.md)
 - Kiali
 - Jaeger
 
+Install:
+
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/step5 \
 | kubectl apply -f -
 ```
 
+Cleanup:
+
+```bash
+kustomize build --enable-helm $ENVP_PROFILE/step5 \
+| kubectl delete -f -
+```
+
 ## Deploy test hello-app
+
+Install:
 
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/hello-app \
 | kubectl apply -f -
+```
+
+Cleanup:
+
+```bash
+kustomize build --enable-helm $ENVP_PROFILE/hello-app \
+| kubectl delete -f -
 ```

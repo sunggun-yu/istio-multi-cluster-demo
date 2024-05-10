@@ -1,0 +1,13 @@
+vault_server         = "https://vault.lab.meowhq.dev"
+root_ca_path         = "pki_root_ca"
+root_ca_description  = "Root CA PKI engine"
+root_ca_common_name  = "MeowHQ Root CA"
+root_ca_organization = "MeowHQ"
+root_ca_issuer_name  = "meowhq-root-ca"
+root_ca_role_name    = "issuer"
+
+istio_int_ca_path         = "pki_istio_int"
+istio_int_ca_description  = "Istio Intermediate CA PKI engine"
+istio_int_ca_common_name  = "istio-ca"
+istio_int_ca_organization = "MeowHQ"
+istio_int_ca_role_name    = "issuer"
