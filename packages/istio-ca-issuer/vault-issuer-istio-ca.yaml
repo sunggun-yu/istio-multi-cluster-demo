@@ -7,6 +7,7 @@ spec:
   vault:
     server: https://vault.lab.meowhq.dev
     path: "pki_istio_int/sign/issuer"
+    # path: "pki/meowhq/istio_int_ca/sign/issuer"
     auth:
       appRole:
         path: approle

@@ -5,21 +5,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../../packages/istio-ca-issuer        # istio-ca-issuer -- do not apply if you are using manual CA
-- overlays/cert-manager-istio-csr          # cert-manager istio-csr -- do not apply if you are using manual CA
-
-## ----------------------------------------------------------------------------
-## Install Istio manually with istioctl for now
-## ----------------------------------------------------------------------------
-
-# - ../../packages/istio-base             # istio-base
-# - overlays/istiod                                # istiod
-# - ../../packages/istio-ingressgateway   # istio-ingressgateway
-# - overlays/istio-cross-network-gateway           # istio-cross-network-gateway
-
-## ----------------------------------------------------------------------------
-## Install after Istio is installed
-## ----------------------------------------------------------------------------
-
-# - ../../packages/istio-gateways         # istio-gateways, ingress and cross-network gateway
-# - overlays/hello-app                             # hello-app
+- ../../../packages/istio-ca-issuer   # istio-ca-issuer -- do not apply if you are using manual CA
+- ./cert-manager-istio-csr            # cert-manager istio-csr -- do not apply if you are using manual CA

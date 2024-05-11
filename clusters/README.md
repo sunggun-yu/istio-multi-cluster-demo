@@ -99,24 +99,28 @@ kustomize build --enable-helm $ENVP_PROFILE/step2 \
 
 ## Step3
 
-Install Istio manually
+- `istio-base`: Istio CR
+- `istiod`: Istio Discovery
 
-- [meowhq-k3s-bee1](./meowhq-k3s-bee1/istio-manual-installation/README.md)
-- [meowhq-k3s-bee2](./meowhq-k3s-bee2/istio-manual-installation/README.md)
-- [meowhq-k3s-xeon1](./meowhq-k3s-xeon1/istio-manual-installation/README.md)
+Install:
 
 ```bash
-istioctl manifest generate \
-  -f $ENVP_PROFILE/istio-manual-installation/iop.yaml \
-  > $ENVP_PROFILE/istio-manual-installation/manifest.yaml
+kustomize build --enable-helm $ENVP_PROFILE/step3 \
+| kubectl apply -f -
 ```
 
+> recycle gateways pods manually if is is not coming up like ImagePullBackOff or something like that
+
+Cleanup:
+
 ```bash
-kubectl apply \
-  -f $ENVP_PROFILE/istio-manual-installation/manifest.yaml
+kustomize build --enable-helm $ENVP_PROFILE/step3 \
+| kubectl delete -f -
 ```
 
 ### Create Istio Remote Secrets
+
+Create Istio Remote Secrets after installing Istio Components
 
 run in `meowhq-k3s-bee1` k8s context:
 
@@ -169,24 +173,13 @@ kubectl apply -f ./remote-secrets/meowhq-k3s-bee1.yaml
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee2.yaml
 ```
 
-Cleanup:
-
-```bash
-istioctl uninstall --purge
-```
-
-or,
-
-```bash
-kubectl delete \
-  -f $ENVP_PROFILE/istio-manual-installation/manifest.yaml
-```
-
 ## Step4
 
-Create Gateways
+- `istio-cross-network-gateway`: Istio Multicluster Network Gateway
+- `istio-ingressgateway`: Istio Ingress Gateway
+- Istio GateWay Resources
 
-Install
+Install:
 
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/step4 \

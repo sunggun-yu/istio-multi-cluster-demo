@@ -1,0 +1,9 @@
+---
+## ----------------------------------------------------------------------------
+## Install istio base and istiod
+## ----------------------------------------------------------------------------
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../packages/istio-base  # Base Istio resources
+- ./istiod                      # istiod

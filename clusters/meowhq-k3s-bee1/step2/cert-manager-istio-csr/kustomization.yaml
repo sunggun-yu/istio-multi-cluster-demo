@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: istio-system
 helmCharts:
 - name: cert-manager-istio-csr
-  namespace: cert-manager
+  namespace: istio-system
   releaseName: cert-manager
   repo: https://charts.jetstack.io
   version: 0.8.1
@@ -12,7 +12,7 @@ helmCharts:
     app:
       logLevel: 5
       server:
-        clusterID: meowhq-k3s-bee2
+        clusterID: meowhq-k3s-bee1
         maxCertificateDuration: 43800h
       certmanager:
         namespace: istio-system

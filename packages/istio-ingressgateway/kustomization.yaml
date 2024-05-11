@@ -3,8 +3,9 @@ kind: Kustomization
 namespace: istio-system
 helmCharts:
 - name: gateway
-  namespace: istio-ingress
+  namespace: istio-system
   releaseName: istio-ingressgateway
   repo: https://istio-release.storage.googleapis.com/charts
-  version: 1.21.1
+  version: 1.21.2
   includeCRDs: true
+  valuesFile: values.yaml

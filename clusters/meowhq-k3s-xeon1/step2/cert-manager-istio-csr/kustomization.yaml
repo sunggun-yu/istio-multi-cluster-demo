@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: istio-system
 helmCharts:
 - name: cert-manager-istio-csr
-  namespace: cert-manager
+  namespace: istio-system
   releaseName: cert-manager
   repo: https://charts.jetstack.io
   version: 0.8.1

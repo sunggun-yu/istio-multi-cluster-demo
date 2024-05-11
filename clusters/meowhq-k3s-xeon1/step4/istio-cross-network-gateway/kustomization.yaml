@@ -6,12 +6,6 @@ helmCharts:
   namespace: istio-system
   releaseName: istio-cross-network-gateway
   repo: https://istio-release.storage.googleapis.com/charts
-  version: 1.21.1
+  version: 1.21.2
   includeCRDs: true
-  valuesInline:
-    name: istio-cross-network-gateway
-    replicaCount: 1
-    labels:
-      istio: cross-network-gateway
-      app: istio-cross-network-gateway
-      topology.istio.io/network: meowhq-k3s-bee1
+  valuesFile: values.yaml
