@@ -17,3 +17,23 @@ spec:
         host: kiali
         port:
           number: 20001
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kiali-global-ingress
+  namespace: istio-system
+spec:
+  gateways:
+  - istio-system/demo-meowhq-dev-gw
+  hosts:
+  - kiali.demo.meowhq.dev
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: kiali
+        port:
+          number: 20001
