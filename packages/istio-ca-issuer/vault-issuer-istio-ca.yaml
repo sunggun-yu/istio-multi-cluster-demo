@@ -6,12 +6,11 @@ metadata:
 spec:
   vault:
     server: https://vault.lab.meowhq.dev
-    path: "pki_istio_int/sign/issuer"
-    # path: "pki/meowhq/istio_int_ca/sign/issuer"
+    path: "pki/meowhq/istio_int_ca/sign/issuer"
     auth:
       appRole:
-        path: approle
-        roleId: 48e47d29-469d-fe83-5f83-a430c96b17f8
+        path: meowhq-istio-int-ca-role
+        roleId: 17f92c87-35f4-d496-db29-8c236cc1651e
         secretRef:
           name: vault-issuer-istio-ca
           key: secret_id

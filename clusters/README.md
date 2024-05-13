@@ -95,6 +95,8 @@ Cleanup:
 ```bash
 kustomize build --enable-helm $ENVP_PROFILE/step2 \
 | kubectl delete -f -
+
+kubectl delete secrets -n istio-system istiod-tls
 ```
 
 ## Step3
@@ -171,6 +173,14 @@ run in `meowhq-k3s-xeon1` k8s context:
 ```bash
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee1.yaml
 kubectl apply -f ./remote-secrets/meowhq-k3s-bee2.yaml
+```
+
+clean up:
+
+```bash
+kubectl delete -f ./remote-secrets/meowhq-k3s-bee1.yaml
+kubectl delete -f ./remote-secrets/meowhq-k3s-bee2.yaml
+kubectl delete -f ./remote-secrets/meowhq-k3s-xeon1.yaml
 ```
 
 ## Step4

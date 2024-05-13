@@ -39,6 +39,8 @@ Refs:
 - configuring istio intermediate CA to be used in `cert-manager/istio-csr`
   - please be aware of `allowed_uri_sans="spiffe://*"` for role creation
 
+- creating AppRole, AppRole Secret ID, and ACL policy for configuring cert-manager Vault issuer auth method
+
 ### Configure Root CA PKI Engine
 
 Enable PKI secret engine in the path `pki_root_ca`.
@@ -153,10 +155,35 @@ vault write pki_istio_int/roles/issuer \
   max_ttl=7200h
 ```
 
-## Next steps
+### Configure AppRole
 
-- Deploy cert-manager: please refer to [Step 1](clusters-configuration.md#step1) in the Cluster Configuration.
+Create a policy named `istio-int-ca-policy` that allows `create` and `update` actions on the `pki_istio_int/sign/issuer` path.
 
-- Deploy istio-csr: please refer to [Step 2](clusters-configuration.md#step2) in the Cluster Configuration.
+> `create` capability may not required
 
-- Deploy istio: please refer to [Step 3](clusters-configuration.md#step3) in the Cluster Configuration.
+```bash
+vault policy write istio-int-ca-policy - <<EOF
+path "pki_istio_int/sign/issuer" {
+  capabilities = ["create", "update"]
+}
+EOF
+```
+
+enable AppRole auth in the path `istio-int-ca-role`.
+
+```bash
+vault auth enable approle -path=istio-int-ca-role
+```
+
+create an AppRole named `istio-int-ca-issuer` with the token policy `istio-int-ca-policy`.
+
+```bash
+vault write auth/istio-int-ca-role/role/istio-int-ca-issuer \
+  token_policies="istio-int-ca-policy"
+```
+
+finally, create secret id and store it somewhere to use it later.
+
+```bash
+vault write -f auth/istio-int-ca-role/role/istio-int-ca-issuer/secret-id
+```
