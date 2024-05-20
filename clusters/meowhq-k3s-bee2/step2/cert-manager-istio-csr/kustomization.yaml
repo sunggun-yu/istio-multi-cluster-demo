@@ -6,7 +6,7 @@ helmCharts:
   namespace: istio-system
   releaseName: cert-manager
   repo: https://charts.jetstack.io
-  version: 0.8.1
+  version: 0.9.0
   includeCRDs: true
   valuesInline:
     app:
