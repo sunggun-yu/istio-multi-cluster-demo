@@ -7,20 +7,20 @@ maintainers:
 version: 0.0.1
 dependencies:
   - name: base
-    version: 1.21.2
+    version: 1.22.0
     repository: https://istio-release.storage.googleapis.com/charts
     condition: base.enabled
   - name: istiod
     repository: https://istio-release.storage.googleapis.com/charts
-    version: 1.21.2
+    version: 1.22.0
     condition: istiod.enabled
   - name: gateway
     alias: ingressgateway
     repository: https://istio-release.storage.googleapis.com/charts
-    version: 1.21.2
+    version: 1.22.0
     condition: ingressgateway.enabled
   - name: gateway
     alias: cross-network-gateway
     repository: https://istio-release.storage.googleapis.com/charts
-    version: 1.21.2
+    version: 1.22.0
     condition: cross-network-gateway.enabled
