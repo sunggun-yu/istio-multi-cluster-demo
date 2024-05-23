@@ -1,0 +1,4 @@
+cert-manager-istio-csr:
+  app:
+    server:
+      clusterID: meowhq-k3s-bee1

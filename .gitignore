@@ -2,3 +2,5 @@
 .history
 **/charts/**
 temp/**
+
+!charts/**

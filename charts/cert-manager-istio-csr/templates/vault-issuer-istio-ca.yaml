@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vault-issuer-istio-ca
+  namespace: {{ .Values.istio.namespace }}
+spec:
+  vault:
+    server: {{ .Values.vault.server }}
+    path: "{{ .Values.vault.istioIntermediateCAPath }}/sign/issuer"
+    auth:
+      appRole:
+        path: {{ .Values.vault.auth.approle.path }}
+        roleId: {{ .Values.vault.auth.approle.roleId }}
+        secretRef:
+          name: vault-issuer-istio-ca
+          key: secret_id

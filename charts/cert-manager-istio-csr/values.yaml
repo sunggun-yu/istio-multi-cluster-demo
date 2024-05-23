@@ -1,0 +1,50 @@
+# ------------------------------------------------------------------------------
+# values for istio-csr
+# ------------------------------------------------------------------------------
+
+istio:
+  namespace: istio-system
+
+vault:
+  server: https://vault.lab.meowhq.dev
+  istioIntermediateCAPath: "pki/meowhq/istio_int_ca"
+  auth:
+    approle:
+      path: "meowhq-istio-int-ca-role"
+      roleId: "17f92c87-35f4-d496-db29-8c236cc1651e"
+      secretIdSecretPath: "meowhq/vault/approle/istio-int-ca"
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: vault-backend-cluster-jwt
+
+# =============================================================================
+# cert-manager istio-csr Helm Chart configuration
+# =============================================================================
+cert-manager-istio-csr:
+  app:
+    server:
+      clusterID: <default value is Kubernetes, set your cluster ID if you are configure Istio Multicluster>
+      maxCertificateDuration: 43800h
+    certmanager:
+      # Namespace to create CertificateRequests for both istio-csr's serving
+      # certificate and incoming gRPC CSRs.
+      namespace: istio-system
+      issuer:
+        # Issuer name set on created CertificateRequests for both istio-csr's
+        # serving certificate and incoming gRPC CSRs.
+        # set vault-issuer-istio-ca to use the Vault Issuer by default
+        name: vault-issuer-istio-ca
+    tls:
+      certificateDNSNames:
+        # it supposed to be under istio-system namespace since we deploy istio-csr in istio-system namespace
+        - cert-manager-istio-csr.istio-system.svc
+      # Requested duration of istio's Certificate. Will be automatically
+      # renewed.
+      # Based on NIST 800-204A recommendations (SM-DR13).
+      # https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204A.pdf
+      # Warning: cert-manager does not allow a duration on Certificates less than
+      # 1 hour.
+      certificateDuration: 43800h
+      istiodCertificateDuration: 43800h
+      # Number of bits to use for istiod-tls Key. chart default is 2048. 4096 is our default
+      istiodPrivateKeySize: 4096

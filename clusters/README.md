@@ -101,8 +101,12 @@ kubectl delete secrets -n istio-system istiod-tls
 
 ## Step3
 
+Install and configure followings using custom helm chart `meowhq-istio`.
+
 - `istio-base`: Istio CR
 - `istiod`: Istio Discovery
+- `istio-ingressgateway`: Istio Ingress Gateway
+- `istio-cross-network-gateway`: Istio Multicluster Network Gateway
 
 Install:
 
@@ -185,8 +189,6 @@ kubectl delete -f ./remote-secrets/meowhq-k3s-xeon1.yaml
 
 ## Step4
 
-- `istio-cross-network-gateway`: Istio Multicluster Network Gateway
-- `istio-ingressgateway`: Istio Ingress Gateway
 - Istio GateWay Resources
 
 Install:

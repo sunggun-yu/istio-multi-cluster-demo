@@ -1,0 +1,19 @@
+{{- if index .Values "cross-network-gateway" "enabled" }}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: cross-network-gateway
+  namespace: {{ .Values.global.gatewayNamespace }}
+spec:
+  selector:
+    istio: {{ index .Values "cross-network-gateway" "labels" "istio" | default "cross-network-gateway" }}
+  servers:
+    - port:
+        number: 15443
+        name: tls
+        protocol: TLS
+      tls:
+        mode: AUTO_PASSTHROUGH
+      hosts:
+        - "*.local"
+{{- end }}

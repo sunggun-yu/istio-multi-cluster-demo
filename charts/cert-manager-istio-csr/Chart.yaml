@@ -1,0 +1,12 @@
+# ------------------------------------------------------------------------------
+# cert-manager-istio-csr v0.9.0
+# ------------------------------------------------------------------------------
+apiVersion: v2
+name: cert-manager-istio-csr
+description: A Helm chart for cert-manager istio-csr
+type: application
+version: 1.0.0
+dependencies:
+  - name: cert-manager-istio-csr
+    version: 0.9.0
+    repository: "https://charts.jetstack.io"

@@ -1,0 +1,26 @@
+apiVersion: v2
+name: meowhq-istio
+description: A Parent Helm chart that configures Istio, Istiod, and multiple Istio Ingress Gateway
+type: application
+maintainers:
+  - name: MeowVader
+version: 0.0.1
+dependencies:
+  - name: base
+    version: 1.21.2
+    repository: https://istio-release.storage.googleapis.com/charts
+    condition: base.enabled
+  - name: istiod
+    repository: https://istio-release.storage.googleapis.com/charts
+    version: 1.21.2
+    condition: istiod.enabled
+  - name: gateway
+    alias: ingressgateway
+    repository: https://istio-release.storage.googleapis.com/charts
+    version: 1.21.2
+    condition: ingressgateway.enabled
+  - name: gateway
+    alias: cross-network-gateway
+    repository: https://istio-release.storage.googleapis.com/charts
+    version: 1.21.2
+    condition: cross-network-gateway.enabled
